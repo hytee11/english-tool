@@ -1,0 +1,905 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>🐻 小熊英语乐园</title><style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: 'Comic Sans MS', 'PingFang SC', '微软雅黑', sans-serif;
+    background: linear-gradient(135deg, #FFE5F1 0%, #E5F1FF 50%, #FFF5E5 100%);
+    min-height: 100vh;
+    color: #333;
+    overflow-x: hidden;
+  }
+
+  /* 顶部 */
+  .header {
+    background: linear-gradient(90deg, #FF6B9D, #FFC371, #6BCB77, #4D96FF);
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header h1 { font-size: 20px; margin-bottom: 4px; }
+  .header .info-bar {
+    display: flex;
+    justify-content: space-around;
+    font-size: 13px;
+    margin-top: 5px;
+  }
+  .header .info-bar span { background: rgba(255,255,255,0.3); padding: 3px 10px; border-radius: 12px; }
+
+  /* 主菜单 */
+  .menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .menu-btn {
+    background: white;
+    border-radius: 20px;
+    padding: 20px 12px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 3px solid transparent;
+    position: relative;
+  }
+  .menu-btn:active { transform: scale(0.95); border-color: #FF6B9D; }
+  .menu-btn .emoji { font-size: 44px; display: block; margin-bottom: 5px; }
+  .menu-btn .label { font-size: 16px; font-weight: bold; color: #333; }
+  .menu-btn .desc { font-size: 11px; color: #888; margin-top: 3px; }
+  .menu-btn .new-tag {
+    position: absolute; top: 5px; right: 5px;
+    background: #FF6B9D; color: white; font-size: 10px;
+    padding: 2px 8px; border-radius: 10px;
+  }
+
+  .menu-btn:nth-child(1) { background: linear-gradient(135deg, #FFE5F1, #FFC1E3); }
+  .menu-btn:nth-child(2) { background: linear-gradient(135deg, #E5F1FF, #C1E1FF); }
+  .menu-btn:nth-child(3) { background: linear-gradient(135deg, #FFF5E5, #FFE5C1); }
+  .menu-btn:nth-child(4) { background: linear-gradient(135deg, #E5FFE5, #C1FFC1); }
+  .menu-btn:nth-child(5) { background: linear-gradient(135deg, #F1E5FF, #E5C1FF); }
+  .menu-btn:nth-child(6) { background: linear-gradient(135deg, #FFE5E5, #FFC1C1); }
+  .menu-btn:nth-child(7) { background: linear-gradient(135deg, #E5FFFF, #C1FFFF); }
+  .menu-btn:nth-child(8) { background: linear-gradient(135deg, #FFFFE5, #FFFFC1); }
+
+  .page {
+    display: none;
+    padding: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .page.active { display: block; }
+
+  .back-btn {
+    display: inline-block;
+    background: white;
+    padding: 6px 15px;
+    border-radius: 18px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .page-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #FF6B9D;
+    margin-bottom: 15px;
+  }
+
+  /* ===== 字母学习 ===== */
+  .story-banner {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    text-align: center;
+  }
+  .bear {
+    font-size: 60px;
+    display: inline-block;
+    animation: bounce 1.5s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .bear-say {
+    display: inline-block;
+    background: #FFF5E5;
+    padding: 8px 15px;
+    border-radius: 15px;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #8B6914;
+    position: relative;
+    vertical-align: middle;
+  }
+  .bear-say::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 8px solid transparent;
+    border-right-color: #FFF5E5;
+  }
+
+  .letter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+  .letter-card {
+    background: white;
+    border-radius: 12px;
+    padding: 10px 5px;
+    text-align: center;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .letter-card:active { transform: scale(0.9); }
+  .letter-card .big { font-size: 28px; font-weight: bold; color: #FF6B9D; }
+  .letter-card .small { font-size: 14px; color: #4D96FF; margin-top: 2px; }
+  .letter-card.learned {
+    background: linear-gradient(135deg, #6BCB77, #4D96FF);
+  }
+  .letter-card.learned .big, .letter-card.learned .small { color: white; }
+
+  .letter-detail {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+  }
+  .letter-detail .display {
+    font-size: 100px;
+    font-weight: bold;
+    color: #FF6B9D;
+    line-height: 1;
+  }
+  .letter-detail .display-small { font-size: 60px; color: #4D96FF; }
+  .letter-detail .example { font-size: 18px; color: #666; margin-top: 10px; }
+  .letter-detail .word-img { font-size: 50px; margin: 10px 0; }
+
+  /* ===== 闪卡 ===== */
+  .flashcard {
+    background: white;
+    border-radius: 25px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+    position: relative;
+  }
+  .flashcard:active { transform: scale(0.98); }
+  .flashcard .emoji-big { font-size: 90px; margin-bottom: 10px; }
+  .flashcard .word-en {
+    font-size: 36px;
+    font-weight: bold;
+    color: #FF6B9D;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+  }
+  .flashcard .word-zh { font-size: 18px; color: #666; }
+  .flashcard .sound-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #4D96FF;
+    color: white;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  /* 跟读按钮 */
+  .mic-btn {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6B9D, #FFA07A);
+    color: white;
+    border: none;
+    font-size: 40px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255,107,157,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: all 0.2s;
+  }
+  .mic-btn:active { transform: scale(0.95); }
+  .mic-btn.recording {
+    background: linear-gradient(135deg, #FF4757, #FF6B9D);
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 6px 20px rgba(255,107,157,0.4); }
+    50% { box-shadow: 0 6px 30px rgba(255,71,87,0.8); }
+  }
+
+  .score-display {
+    text-align: center;
+    margin-top: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  }
+  .score-stars { font-size: 36px; margin-bottom: 5px; }
+  .score-text { font-size: 16px; color: #666; }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  .btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    font-family: inherit;
+  }
+  .btn:active { transform: scale(0.95); }
+  .btn-prev { background: linear-gradient(90deg, #95A5A6, #7F8C8D); }
+  .btn-next { background: linear-gradient(90deg, #4D96FF, #6BCB77); }
+  .btn-sound { background: linear-gradient(90deg, #FF6B9D, #FFC371); }
+  .btn-know { background: linear-gradient(90deg, #6BCB77, #4D96FF); }
+  .btn-dont { background: linear-gradient(90deg, #FF6B9D, #FFA07A); }
+
+  /* ===== 情景学习 ===== */
+  .scene-container {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+  }
+  .scene-bg {
+    background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 50%, #98FB98 100%);
+    border-radius: 15px;
+    padding: 30px 20px;
+    position: relative;
+    min-height: 220px;
+    overflow: hidden;
+  }
+  .scene-bg.sun { background: linear-gradient(180deg, #FFE5B4 0%, #FFB6C1 50%, #98FB98 100%); }
+  .scene-bg.night { background: linear-gradient(180deg, #191970 0%, #4169E1 60%, #2F4F4F 100%); }
+  .scene-bg.kitchen { background: linear-gradient(180deg, #FFE4E1 0%, #FFB6C1 50%, #F0E68C 100%); }
+  .scene-bg.school { background: linear-gradient(180deg, #E0FFFF 0%, #B0E0E6 50%, #F5DEB3 100%); }
+  .scene-bg.zoo { background: linear-gradient(180deg, #98FB98 0%, #90EE90 50%, #D2B48C 100%); }
+
+  .scene-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: flex-end;
+  }
+  .scene-item {
+    font-size: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    user-select: none;
+  }
+  .scene-item:active { transform: scale(1.2); }
+  .scene-item.tapped { animation: shake 0.5s; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  .scene-item .label {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.95);
+    color: #FF6B9D;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .scene-task {
+    background: #FFF9E5;
+    border-left: 4px solid #FFC371;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-size: 14px;
+    color: #8B6914;
+  }
+  .scene-task strong { color: #FF6B9D; }
+
+  .scene-sentence {
+    text-align: center;
+    background: linear-gradient(135deg, #FFE5F1, #E5F1FF);
+    border-radius: 12px;
+    padding: 15px;
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+  }
+  .scene-sentence .en { color: #FF6B9D; font-weight: bold; }
+  .scene-sentence .zh { color: #666; font-size: 14px; margin-top: 5px; }
+
+  /* ===== 拼读游戏 ===== */
+  .game-area {
+    background: white;
+    border-radius: 20px;
+    padding: 25px 15px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+  }
+  .game-emoji { font-size: 70px; margin-bottom: 10px; }
+  .game-word { font-size: 32px; font-weight: bold; color: #FF6B9D; margin-bottom: 15px; letter-spacing: 5px; }
+  .game-letters {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+  .letter-option {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, #FFE5F1, #E5F1FF);
+    border: 2px solid #FF6B9D;
+    border-radius: 12px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #FF6B9D;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .letter-option:active { transform: scale(0.9); }
+  .letter-option.used { opacity: 0.3; pointer-events: none; }
+  .letter-option.correct { background: #6BCB77; color: white; border-color: #6BCB77; }
+  .letter-option.wrong { background: #FF6B9D; color: white; border-color: #FF6B9D; }
+  .letter-option.hint { background: #FFC371; color: white; border-color: #FFC371; animation: hint-pulse 1s 2; }
+  @keyframes hint-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  .slots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }
+  .slot {
+    width: 50px; height: 50px;
+    background: #F5F5F5;
+    border: 2px dashed #999;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .slot.filled {
+    background: linear-gradient(135deg, #FFE5F1, #E5F1FF);
+    border-style: solid;
+    border-color: #FF6B9D;
+    color: #FF6B9D;
+  }
+
+  /* ===== 听写 ===== */
+  .dictation-area {
+    background: white;
+    border-radius: 20px;
+    padding: 25px 15px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+  .dictation-emoji { font-size: 70px; margin-bottom: 10px; }
+  .dictation-hint { font-size: 16px; color: #666; margin-bottom: 10px; }
+  .dictation-input {
+    width: 100%;
+    padding: 14px;
+    font-size: 24px;
+    border: 2px solid #FF6B9D;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: #FF6B9D;
+    margin-bottom: 12px;
+    letter-spacing: 3px;
+    font-family: inherit;
+  }
+
+  /* ===== 测验 ===== */
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .quiz-option {
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    background: white;
+    border: 3px solid #E5F1FF;
+    border-radius: 15px;
+    cursor: pointer;
+    color: #333;
+    font-family: inherit;
+  }
+  .quiz-option:active { transform: scale(0.98); }
+  .quiz-option.correct { background: #6BCB77; color: white; border-color: #6BCB77; }
+  .quiz-option.wrong { background: #FF6B9D; color: white; border-color: #FF6B9D; }
+
+  /* ===== 通用 ===== */
+  .feedback {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    z-index: 1000;
+    pointer-events: none;
+    animation: pop 1s ease-out;
+  }
+  @keyframes pop {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+  }
+
+  .tip {
+    background: #FFF9E5;
+    border-left: 4px solid #FFC371;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: #8B6914;
+  }
+
+  .progress {
+    background: #F0F0F0;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 8px 0 15px;
+  }
+  .progress-fill {
+    background: linear-gradient(90deg, #FF6B9D, #FFC371);
+    height: 100%;
+    transition: width 0.3s;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  .stat-card {
+    background: white;
+    padding: 12px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  }
+  .stat-num { font-size: 24px; font-weight: bold; color: #FF6B9D; }
+  .stat-label { font-size: 11px; color: #666; margin-top: 3px; }
+
+  .streak-fire {
+    display: inline-block;
+    animation: flicker 0.5s infinite alternate;
+  }
+  @keyframes flicker {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+  }
+
+  /* 家长监控面板 */
+  .chart-bar {
+    flex: 1;
+    background: linear-gradient(180deg, #FF6B9D, #FFC371);
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    min-height: 10px;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .chart-bar:hover {
+    transform: scaleY(1.05);
+    transform-origin: bottom;
+  }
+  .chart-bar .value {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #FF6B9D;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  .chart-bar.today {
+    background: linear-gradient(180deg, #6BCB77, #4D96FF);
+  }
+
+  .module-row {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    gap: 10px;
+  }
+  .module-icon {
+    width: 35px;
+    font-size: 24px;
+    text-align: center;
+  }
+  .module-info {
+    flex: 1;
+  }
+  .module-name {
+    font-size: 13px;
+    color: #333;
+    font-weight: bold;
+  }
+  .module-bar-bg {
+    height: 8px;
+    background: #F0F0F0;
+    border-radius: 4px;
+    margin-top: 4px;
+    overflow: hidden;
+  }
+  .module-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FF6B9D, #FFC371);
+    border-radius: 4px;
+    transition: width 0.5s;
+  }
+  .module-percent {
+    font-size: 12px;
+    color: #666;
+    min-width: 40px;
+    text-align: right;
+  }
+
+  .weak-item {
+    background: #FFF5E5;
+    border-left: 3px solid #FF6B9D;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 6px 0;
+    font-size: 13px;
+    color: #8B4513;
+  }
+  .strong-item {
+    background: #E5FFE5;
+    border-left: 3px solid #6BCB77;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 6px 0;
+    font-size: 13px;
+    color: #2D5016;
+  }
+  .suggestion-item {
+    background: white;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.5;
+  }
+  .suggestion-item .tag {
+    display: inline-block;
+    background: #FF6B9D;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    margin-right: 6px;
+  }
+
+  /* 移动端 */
+  @media (max-width: 480px) {
+    .menu { grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
+    .menu-btn { padding: 15px 8px; }
+    .menu-btn .emoji { font-size: 36px; }
+    .menu-btn .label { font-size: 14px; }
+    .header h1 { font-size: 18px; }
+    .header .info-bar { font-size: 11px; }
+    .letter-detail .display { font-size: 80px; }
+  }
+</style></head><body>
+<div id="page-menu" class="app-page">
+<div class="header"><h1>🐻 小熊英语乐园</h1><div class="info-bar"><span>⭐ <span id="hudScore">0</span></span><span>🔥 <span id="hudStreak">0</span></span><span>📅 今日 <span id="hudToday">0</span></div></div>
+<div class="menu">
+<a href="javascript:void(0)" class="menu-btn" onclick="showPage('alphabet')"><span class="emoji">🔤</span><div class="label">字母乐园</div><div class="desc">学26个字母</div></a>
+<a href="javascript:void(0)" class="menu-btn" onclick="showPage('flashcard')"><span class="emoji">🃏</span><div class="label">单词闪卡</div><div class="desc">看图记单词</div></a>
+<a href="javascript:void(0)" class="menu-btn" onclick="showPage('spelling')"><span class="emoji">🎮</span><div class="label">拼读游戏</div><div class="desc">看图拼单词</div></a>
+<a href="javascript:void(0)" class="menu-btn" onclick="showPage('dictation')"><span class="emoji">✏️</span><div class="label">听写练习</div><div class="desc">看我怎么写</div></a>
+</div>
+<div style="text-align:center;padding:20px;color:#666;font-size:14px;">
+<p>💡 点击上面的卡片开始学习</p>
+<p style="margin-top:10px;">建议：每天学习15-20分钟</p>
+</div>
+</div>
+
+<div id="page-alphabet" class="app-page" style="display:none">
+<div class="header"><h1>🔤 字母乐园</h1><div class="info-bar"><span>⭐ <span id="hudScore2">0</span></span><span>🔤 <span id="hudLetters">0</span>/26</span></div></div>
+<a href="javascript:void(0)" class="back-btn" onclick="goHome()">⬅ 返回</a>
+<div class="page active">
+<div class="story-banner"><span class="bear">🐻</span><span class="bear-say">点字母听发音！</span></div>
+<div id="letterDetail"></div>
+<div class="letter-grid" id="letterGrid"></div>
+<div class="tip">💡 点字母听发音！</div>
+</div>
+</div>
+
+<div id="page-flashcard" class="app-page" style="display:none">
+<div class="header"><h1>🃏 单词闪卡</h1><div class="info-bar"><span>⭐ <span id="hudScore3">0</span></span><span>📚 <span id="hudWords">0</span>词</span></div></div>
+<a href="javascript:void(0)" class="back-btn" onclick="goHome()">⬅ 返回</a>
+<div class="page active">
+<div class="flashcard" onclick="flipCard()">
+<div class="sound-btn" onclick="event.stopPropagation();speak(currentWord.en)">🔊</div>
+<div class="emoji-big" id="cEmoji">🐱</div>
+<div class="word-en" id="cEn">cat</div>
+<div class="word-zh" id="cZh">👆 点点看中文</div>
+</div>
+<div class="controls">
+<button class="btn btn-prev" onclick="prevCard()">⬅ 上一个</button>
+<button class="btn btn-sound" onclick="speak(currentWord.en)">🔊 听一听</button>
+<button class="btn btn-next" onclick="nextCard()">下一个 ➡</button>
+</div>
+</div>
+</div>
+
+<div id="page-spelling" class="app-page" style="display:none">
+<div class="header"><h1>🎮 看图拼单词</h1><div class="info-bar"><span>⭐ <span id="hudScore4">0</span></span><span>✅ <span id="hudCorrect">0</span></span></div></div>
+<a href="javascript:void(0)" class="back-btn" onclick="goHome()">⬅ 返回</a>
+<div class="page active">
+<div class="game-area">
+<div class="game-emoji" id="gEmoji">🐱</div>
+<div class="game-word" id="gWord">c _ t</div>
+<div class="slots" id="slots"></div>
+<div class="game-letters" id="lOpts"></div>
+</div>
+<div class="tip">💡 按顺序点字母拼出单词！</div>
+<div class="controls">
+<button class="btn btn-sound" onclick="speak(cur.en)">🔊 听单词</button>
+<button class="btn btn-know" onclick="giveHint()">💡 提示</button>
+</div>
+</div>
+</div>
+
+<div id="page-dictation" class="app-page" style="display:none">
+<div class="header"><h1>✏️ 听写练习</h1><div class="info-bar"><span>⭐ <span id="hudScore5">0</span></span><span>📚 <span id="hudWords2">0</span>词</span></div></div>
+<a href="javascript:void(0)" class="back-btn" onclick="goHome()">⬅ 返回</a>
+<div class="page active">
+<div class="dictation-area">
+<div class="dictation-emoji" id="dEmoji">🐱</div>
+<div class="dictation-hint" id="dHint">看图拼写单词</div>
+<input type="text" class="dictation-input" id="dInput" maxlength="10" autocomplete="off" autocapitalize="off" autocorrect="off">
+<div class="controls">
+<button class="btn btn-sound" onclick="speak(cur.en)">🔊 听单词</button>
+<button class="btn btn-next" onclick="checkDict()">检查 ➡</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+const WORDS_L1 = [
+  {en:'a',zh:'一个',emoji:'🍎'},{en:'ant',zh:'蚂蚁',emoji:'🐜'},
+  {en:'cat',zh:'猫',emoji:'🐱'},{en:'dog',zh:'狗',emoji:'🐶'},
+  {en:'egg',zh:'蛋',emoji:'🥚'},{en:'pig',zh:'猪',emoji:'🐷'},
+  {en:'bed',zh:'床',emoji:'🛏️'},{en:'cup',zh:'杯子',emoji:'🥤'},
+  {en:'sun',zh:'太阳',emoji:'☀️'},{en:'red',zh:'红色',emoji:'🔴'},
+  {en:'book',zh:'书',emoji:'📚'},{en:'hand',zh:'手',emoji:'✋'},
+  {en:'fish',zh:'鱼',emoji:'🐟'},{en:'bird',zh:'鸟',emoji:'🐦'},
+  {en:'milk',zh:'牛奶',emoji:'🥛'},{en:'blue',zh:'蓝色',emoji:'🔵'},
+  {en:'cake',zh:'蛋糕',emoji:'🎂'},{en:'eye',zh:'眼睛',emoji:'👁️'},
+  {en:'nose',zh:'鼻子',emoji:'👃'},{en:'apple',zh:'苹果',emoji:'🍎'},
+];
+const ALPHABET_DATA = {
+  A:{word:'ant',emoji:'🐜'},B:{word:'bed',emoji:'🛏️'},
+  C:{word:'cat',emoji:'🐱'},D:{word:'dog',emoji:'🐶'},
+  E:{word:'egg',emoji:'🥚'},F:{word:'fish',emoji:'🐟'},
+  G:{word:'goat',emoji:'🐐'},H:{word:'hand',emoji:'✋'},
+  I:{word:'ice',emoji:'🧊'},J:{word:'jam',emoji:'🍯'},
+  K:{word:'kite',emoji:'🪁'},L:{word:'lion',emoji:'🦁'},
+  M:{word:'milk',emoji:'🥛'},N:{word:'nose',emoji:'👃'},
+  O:{word:'orange',emoji:'🍊'},P:{word:'pig',emoji:'🐷'},
+  Q:{word:'queen',emoji:'👸'},R:{word:'red',emoji:'🔴'},
+  S:{word:'sun',emoji:'☀️'},T:{word:'tiger',emoji:'🐯'},
+  U:{word:'umbrella',emoji:'☂️'},V:{word:'van',emoji:'🚐'},
+  W:{word:'water',emoji:'💧'},X:{word:'box',emoji:'📦'},
+  Y:{word:'yellow',emoji:'💛'},Z:{word:'zoo',emoji:'🦁'},
+};
+let score = parseInt(localStorage.getItem('score')||'0');
+let learnedLetters = JSON.parse(localStorage.getItem('learnedLetters')||'[]');
+let learnedWords = parseInt(localStorage.getItem('learnedWords')||'0');
+let correctCount = parseInt(localStorage.getItem('correct')||'0');
+let wrongCount = parseInt(localStorage.getItem('wrong')||'0');
+let streak = parseInt(localStorage.getItem('streak')||'0');
+let todayCount = parseInt(localStorage.getItem('todayCount')||'0');
+function save(){
+  localStorage.setItem('score',score);
+  localStorage.setItem('learnedLetters',JSON.stringify(learnedLetters));
+  localStorage.setItem('learnedWords',learnedWords);
+  localStorage.setItem('correct',correctCount);
+  localStorage.setItem('wrong',wrongCount);
+  localStorage.setItem('streak',streak);
+  localStorage.setItem('todayCount',todayCount);
+  updateHeader();
+}
+function updateHeader(){
+  const s=document.getElementById('hudScore');
+  if(s) s.textContent=score;
+}
+function speak(t){
+  if(!('speechSynthesis' in window))return;
+  const u=new SpeechSynthesisUtterance(t);
+  u.lang='en-US';u.rate=0.7;u.pitch=1.1;
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+}
+function showFeedback(emoji){
+  const fb=document.createElement('div');
+  fb.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:100px;z-index:1000;pointer-events:none;';
+  fb.textContent=emoji;document.body.appendChild(fb);
+  setTimeout(()=>fb.remove(),1000);
+}
+function showPage(pageId){
+  // 隐藏所有页面
+  document.querySelectorAll('.app-page').forEach(p=>p.style.display='none');
+  // 显示目标页面
+  const target=document.getElementById('page-'+pageId);
+  if(target) target.style.display='block';
+  // 调用页面的渲染函数
+  if(pageId==='alphabet' && typeof renderAlphabet==='function') renderAlphabet();
+  if(pageId==='flashcard' && typeof renderFlash==='function') renderFlash();
+  if(pageId==='spelling' && typeof renderSpell==='function') renderSpell();
+  if(pageId==='dictation' && typeof renderDict==='function') renderDict();
+}
+function goHome(){
+  showPage('menu');
+}
+
+let alphaRendered=false;
+function renderAlphabet(){
+  if(!alphaRendered){
+    document.getElementById('hudLetters').textContent=learnedLetters.length;
+    alphaRendered=true;
+  }
+  const grid=document.getElementById('letterGrid');
+  grid.innerHTML=Object.keys(ALPHABET_DATA).map(l=>{
+    const learned=learnedLetters.includes(l);
+    return '<div class="letter-card '+(learned?'learned':'')+'" onclick="learnLetter(\''+l+'\')"><div class="big">'+l+'</div><div class="small">'+l.toLowerCase()+'</div></div>';
+  }).join('');
+  if(!window._currentLetter) window._currentLetter=Object.keys(ALPHABET_DATA)[0];
+  showLetterDetail(window._currentLetter);
+}
+function learnLetter(letter){
+  window._currentLetter=letter;
+  speak(letter.toLowerCase());
+  if(!learnedLetters.includes(letter)){learnedLetters.push(letter);score+=5;save();}
+  document.getElementById('hudLetters').textContent=learnedLetters.length;
+  showLetterDetail(letter);renderAlphabet();showFeedback('⭐');
+}
+function showLetterDetail(letter){
+  const data=ALPHABET_DATA[letter];
+  document.getElementById('letterDetail').innerHTML='<div class="letter-detail"><div class="display">'+letter+' <span class="display-small">'+letter.toLowerCase()+'</span></div><div class="word-img">'+data.emoji+'</div><div class="word-en" style="font-size:28px;color:#FF6B9D;">'+data.word+'</div></div>';
+}
+
+let cwi=0,currentWord=WORDS[0],flipped=false;
+function renderFlash(){
+  currentWord=WORDS[cwi];
+  document.getElementById('cEmoji').textContent=currentWord.emoji;
+  document.getElementById('cEn').textContent=currentWord.en;
+  document.getElementById('cZh').textContent='👆 点点看中文';
+  document.getElementById('cZh').style.opacity='0.5';
+  setTimeout(()=>speak(currentWord.en),300);
+}
+function flipCard(){
+  flipped=!flipped;
+  document.getElementById('cZh').textContent=flipped?currentWord.zh:'👆 点点看中文';
+  document.getElementById('cZh').style.opacity=flipped?'1':'0.5';
+  if(flipped){learnedWords=Math.max(learnedWords,cwi+1);score+=2;save();
+    document.getElementById('hudWords').textContent=learnedWords;}
+}
+function nextCard(){cwi=(cwi+1)%WORDS.length;renderFlash();}
+function prevCard(){cwi=(cwi-1+WORDS.length)%WORDS.length;renderFlash();}
+
+let si=0,sf=[],cur=WORDS[0];
+function renderSpell(){
+  cur=WORDS[si];
+  document.getElementById('gEmoji').textContent=cur.emoji;
+  document.getElementById('gWord').textContent=cur.en.split('').map(c=>'_').join(' ');
+  document.getElementById('slots').innerHTML=cur.en.split('').map(()=>'<div class="slot"></div>').join('');
+  let letters=cur.en.toUpperCase().split('');
+  let dis='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').filter(l=>!letters.includes(l));
+  let all=[...letters];
+  for(let i=0;i<3;i++){const idx=Math.floor(Math.random()*dis.length);all.push(dis.splice(idx,1)[0]);}
+  all.sort(()=>Math.random()-0.5);
+  document.getElementById('lOpts').innerHTML=all.map(l=>
+    '<div class="letter-option" data-letter="'+l+'" onclick="pickLetter(this,\''+l+'\')">'+l+'</div>').join('');
+  sf=[];
+  setTimeout(()=>speak(cur.en),500);
+}
+function pickLetter(el,letter){
+  const tl=cur.en.toUpperCase().split('');
+  const pos=sf.length;
+  if(letter===tl[pos]){
+    el.classList.add('used','correct');
+    setTimeout(()=>el.style.display='none',300);
+    sf.push(letter);
+    const slots=document.querySelectorAll('#slots .slot');
+    slots[pos].textContent=letter;slots[pos].classList.add('filled');
+    speak(letter.toLowerCase());
+    if(sf.length===tl.length){
+      score+=20;correctCount++;streak++;save();
+      document.getElementById('hudCorrect').textContent=correctCount;
+      setTimeout(()=>{showFeedback('🎉');setTimeout(()=>{si=(si+1)%WORDS.length;renderSpell();},1000);},500);
+    }
+  }else{
+    el.classList.add('wrong');wrongCount++;save();
+    setTimeout(()=>el.classList.remove('wrong'),500);
+    setTimeout(()=>speak(cur.en),300);
+  }
+}
+function giveHint(){
+  const tl=cur.en.toUpperCase().split('');
+  const nl=tl[sf.length];if(!nl)return;
+  document.querySelectorAll('#lOpts .letter-option').forEach(opt=>{
+    if(opt.dataset.letter===nl&&!opt.classList.contains('used')){
+      opt.classList.add('hint');setTimeout(()=>opt.classList.remove('hint'),2000);
+    }
+  });
+}
+
+let di=0,cur=WORDS[0];
+function renderDict(){
+  cur=WORDS[di];
+  document.getElementById('dEmoji').textContent=cur.emoji;
+  document.getElementById('dHint').textContent='看图拼写单词（共 '+cur.en.length+' 个字母）';
+  document.getElementById('dInput').value='';
+  setTimeout(()=>speak(cur.en),500);
+}
+function checkDict(){
+  const input=document.getElementById('dInput').value.trim().toLowerCase();
+  const word=cur.en.toLowerCase();
+  if(input===word){showFeedback('✅');score+=15;correctCount++;streak++;save();setTimeout(()=>{di=(di+1)%WORDS.length;renderDict();},1000);}
+  else if(input.length===0)alert('请先输入答案哦～');
+  else{showFeedback('❌');wrongCount++;streak=0;save();document.getElementById('dInput').value='';}
+}
+document.getElementById('dInput').addEventListener('keypress',e=>{if(e.key==='Enter')checkDict();});
+updateHeader();</script></body></html>
