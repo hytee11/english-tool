@@ -642,12 +642,24 @@
   }
 </style></head><body>
 <div id="page-menu" class="app-page">
-<div class="header"><h1>🐻 小熊英语乐园</h1><div class="info-bar"><span>⭐ <span id="hudScore">0</span></span><span>🔥 <span id="hudStreak">0</span></span><span>📅 今日 <span id="hudToday">0</span></div></div>
+<div class="header"><h1>🐻 小熊英语乐园</h1><div class="info-bar">
+<span>⭐ <span id="hudScore">0</span></span>
+<span>🔥 <span id="hudStreak">0</span></span>
+<span>📅 今日 <span id="hudToday">0</span></span>
+</div></div>
 <div class="menu">
-<a href="javascript:void(0)" class="menu-btn" onclick="showPage('alphabet')"><span class="emoji">🔤</span><div class="label">字母乐园</div><div class="desc">学26个字母</div></a>
-<a href="javascript:void(0)" class="menu-btn" onclick="showPage('flashcard')"><span class="emoji">🃏</span><div class="label">单词闪卡</div><div class="desc">看图记单词</div></a>
-<a href="javascript:void(0)" class="menu-btn" onclick="showPage('spelling')"><span class="emoji">🎮</span><div class="label">拼读游戏</div><div class="desc">看图拼单词</div></a>
-<a href="javascript:void(0)" class="menu-btn" onclick="showPage('dictation')"><span class="emoji">✏️</span><div class="label">听写练习</div><div class="desc">看我怎么写</div></a>
+<div class="menu-btn" data-page="alphabet" onclick="showPage('alphabet')">
+<span class="emoji">🔤</span><div class="label">字母乐园</div><div class="desc">学26个字母</div>
+</div>
+<div class="menu-btn" data-page="flashcard" onclick="showPage('flashcard')">
+<span class="emoji">🃏</span><div class="label">单词闪卡</div><div class="desc">看图记单词</div>
+</div>
+<div class="menu-btn" data-page="spelling" onclick="showPage('spelling')">
+<span class="emoji">🎮</span><div class="label">拼读游戏</div><div class="desc">看图拼单词</div>
+</div>
+<div class="menu-btn" data-page="dictation" onclick="showPage('dictation')">
+<span class="emoji">✏️</span><div class="label">听写练习</div><div class="desc">看我怎么写</div>
+</div>
 </div>
 <div style="text-align:center;padding:20px;color:#666;font-size:14px;">
 <p>💡 点击上面的卡片开始学习</p>
@@ -656,8 +668,11 @@
 </div>
 
 <div id="page-alphabet" class="app-page" style="display:none">
-<div class="header"><h1>🔤 字母乐园</h1><div class="info-bar"><span>⭐ <span id="hudScore2">0</span></span><span>🔤 <span id="hudLetters">0</span>/26</span></div></div>
-<a href="javascript:void(0)" class="back-btn" onclick="goHome()">⬅ 返回</a>
+<div class="header"><h1>🔤 字母乐园</h1><div class="info-bar">
+<span>⭐ <span id="hudScore2">0</span></span>
+<span>🔤 <span id="hudLetters">0</span>/26</span>
+</div></div>
+<div class="back-btn" onclick="goHome()">⬅ 返回</div>
 <div class="page active">
 <div class="story-banner"><span class="bear">🐻</span><span class="bear-say">点字母听发音！</span></div>
 <div id="letterDetail"></div>
@@ -667,8 +682,11 @@
 </div>
 
 <div id="page-flashcard" class="app-page" style="display:none">
-<div class="header"><h1>🃏 单词闪卡</h1><div class="info-bar"><span>⭐ <span id="hudScore3">0</span></span><span>📚 <span id="hudWords">0</span>词</span></div></div>
-<a href="javascript:void(0)" class="back-btn" onclick="goHome()">⬅ 返回</a>
+<div class="header"><h1>🃏 单词闪卡</h1><div class="info-bar">
+<span>⭐ <span id="hudScore3">0</span></span>
+<span>📚 <span id="hudWords">0</span>词</span>
+</div></div>
+<div class="back-btn" onclick="goHome()">⬅ 返回</div>
 <div class="page active">
 <div class="flashcard" onclick="flipCard()">
 <div class="sound-btn" onclick="event.stopPropagation();speak(currentWord.en)">🔊</div>
@@ -685,8 +703,11 @@
 </div>
 
 <div id="page-spelling" class="app-page" style="display:none">
-<div class="header"><h1>🎮 看图拼单词</h1><div class="info-bar"><span>⭐ <span id="hudScore4">0</span></span><span>✅ <span id="hudCorrect">0</span></span></div></div>
-<a href="javascript:void(0)" class="back-btn" onclick="goHome()">⬅ 返回</a>
+<div class="header"><h1>🎮 看图拼单词</h1><div class="info-bar">
+<span>⭐ <span id="hudScore4">0</span></span>
+<span>✅ <span id="hudCorrect">0</span></span>
+</div></div>
+<div class="back-btn" onclick="goHome()">⬅ 返回</div>
 <div class="page active">
 <div class="game-area">
 <div class="game-emoji" id="gEmoji">🐱</div>
@@ -703,8 +724,11 @@
 </div>
 
 <div id="page-dictation" class="app-page" style="display:none">
-<div class="header"><h1>✏️ 听写练习</h1><div class="info-bar"><span>⭐ <span id="hudScore5">0</span></span><span>📚 <span id="hudWords2">0</span>词</span></div></div>
-<a href="javascript:void(0)" class="back-btn" onclick="goHome()">⬅ 返回</a>
+<div class="header"><h1>✏️ 听写练习</h1><div class="info-bar">
+<span>⭐ <span id="hudScore5">0</span></span>
+<span>📚 <span id="hudWords2">0</span>词</span>
+</div></div>
+<div class="back-btn" onclick="goHome()">⬅ 返回</div>
 <div class="page active">
 <div class="dictation-area">
 <div class="dictation-emoji" id="dEmoji">🐱</div>
@@ -745,13 +769,13 @@ const ALPHABET_DATA = {
   W:{word:'water',emoji:'💧'},X:{word:'box',emoji:'📦'},
   Y:{word:'yellow',emoji:'💛'},Z:{word:'zoo',emoji:'🦁'},
 };
-let score = parseInt(localStorage.getItem('score')||'0');
-let learnedLetters = JSON.parse(localStorage.getItem('learnedLetters')||'[]');
-let learnedWords = parseInt(localStorage.getItem('learnedWords')||'0');
-let correctCount = parseInt(localStorage.getItem('correct')||'0');
-let wrongCount = parseInt(localStorage.getItem('wrong')||'0');
-let streak = parseInt(localStorage.getItem('streak')||'0');
-let todayCount = parseInt(localStorage.getItem('todayCount')||'0');
+let score=parseInt(localStorage.getItem('score')||'0');
+let learnedLetters=JSON.parse(localStorage.getItem('learnedLetters')||'[]');
+let learnedWords=parseInt(localStorage.getItem('learnedWords')||'0');
+let correctCount=parseInt(localStorage.getItem('correct')||'0');
+let wrongCount=parseInt(localStorage.getItem('wrong')||'0');
+let streak=parseInt(localStorage.getItem('streak')||'0');
+let todayCount=parseInt(localStorage.getItem('todayCount')||'0');
 function save(){
   localStorage.setItem('score',score);
   localStorage.setItem('learnedLetters',JSON.stringify(learnedLetters));
@@ -760,11 +784,6 @@ function save(){
   localStorage.setItem('wrong',wrongCount);
   localStorage.setItem('streak',streak);
   localStorage.setItem('todayCount',todayCount);
-  updateHeader();
-}
-function updateHeader(){
-  const s=document.getElementById('hudScore');
-  if(s) s.textContent=score;
 }
 function speak(t){
   if(!('speechSynthesis' in window))return;
@@ -778,63 +797,82 @@ function showFeedback(emoji){
   fb.textContent=emoji;document.body.appendChild(fb);
   setTimeout(()=>fb.remove(),1000);
 }
-function showPage(pageId){
-  // 隐藏所有页面
-  document.querySelectorAll('.app-page').forEach(p=>p.style.display='none');
-  // 显示目标页面
-  const target=document.getElementById('page-'+pageId);
-  if(target) target.style.display='block';
-  // 调用页面的渲染函数
-  if(pageId==='alphabet' && typeof renderAlphabet==='function') renderAlphabet();
-  if(pageId==='flashcard' && typeof renderFlash==='function') renderFlash();
-  if(pageId==='spelling' && typeof renderSpell==='function') renderSpell();
-  if(pageId==='dictation' && typeof renderDict==='function') renderDict();
+function showPage(p){
+  document.querySelectorAll('.app-page').forEach(el=>{el.style.display='none';});
+  const t=document.getElementById('page-'+p);
+  if(t){t.style.display='block';window.scrollTo(0,0);}
+  if(p==='alphabet'&&typeof renderAlphabet==='function')renderAlphabet();
+  if(p==='flashcard'&&typeof renderFlash==='function')renderFlash();
+  if(p==='spelling'&&typeof renderSpell==='function')renderSpell();
+  if(p==='dictation'&&typeof renderDict==='function')renderDict();
 }
-function goHome(){
-  showPage('menu');
+function goHome(){showPage('menu');}
+function updateHud(){
+  const s=document.getElementById('hudScore');
+  if(s)s.textContent=score;
+  const st=document.getElementById('hudStreak');
+  if(st)st.textContent=streak;
+  const t=document.getElementById('hudToday');
+  if(t)t.textContent=todayCount;
+  const w=document.getElementById('hudWords');
+  if(w)w.textContent=learnedWords;
+  const c=document.getElementById('hudCorrect');
+  if(c)c.textContent=correctCount;
+  const l=document.getElementById('hudLetters');
+  if(l)l.textContent=learnedLetters.length;
 }
 
-let alphaRendered=false;
+let curLetter=null;
 function renderAlphabet(){
-  if(!alphaRendered){
-    document.getElementById('hudLetters').textContent=learnedLetters.length;
-    alphaRendered=true;
-  }
   const grid=document.getElementById('letterGrid');
+  if(!grid)return;
   grid.innerHTML=Object.keys(ALPHABET_DATA).map(l=>{
     const learned=learnedLetters.includes(l);
-    return '<div class="letter-card '+(learned?'learned':'')+'" onclick="learnLetter(\''+l+'\')"><div class="big">'+l+'</div><div class="small">'+l.toLowerCase()+'</div></div>';
+    return '<div class="letter-card '+(learned?'learned':'')+'" data-l="'+l+'" onclick="learnLetter(this)"><div class="big">'+l+'</div><div class="small">'+l.toLowerCase()+'</div></div>';
   }).join('');
-  if(!window._currentLetter) window._currentLetter=Object.keys(ALPHABET_DATA)[0];
-  showLetterDetail(window._currentLetter);
+  if(!curLetter)curLetter='A';
+  showLetterDetail(curLetter);
+  updateHud();
 }
-function learnLetter(letter){
-  window._currentLetter=letter;
+function learnLetter(el){
+  const letter=el.dataset.l;
+  curLetter=letter;
   speak(letter.toLowerCase());
   if(!learnedLetters.includes(letter)){learnedLetters.push(letter);score+=5;save();}
-  document.getElementById('hudLetters').textContent=learnedLetters.length;
-  showLetterDetail(letter);renderAlphabet();showFeedback('⭐');
+  showLetterDetail(letter);
+  // 重新渲染
+  el.classList.add('learned');
+  updateHud();
+  showFeedback('⭐');
 }
 function showLetterDetail(letter){
   const data=ALPHABET_DATA[letter];
-  document.getElementById('letterDetail').innerHTML='<div class="letter-detail"><div class="display">'+letter+' <span class="display-small">'+letter.toLowerCase()+'</span></div><div class="word-img">'+data.emoji+'</div><div class="word-en" style="font-size:28px;color:#FF6B9D;">'+data.word+'</div></div>';
+  if(!data)return;
+  const detail=document.getElementById('letterDetail');
+  if(detail)detail.innerHTML='<div class="letter-detail"><div class="display">'+letter+' <span class="display-small">'+letter.toLowerCase()+'</span></div><div class="word-img">'+data.emoji+'</div><div class="word-en" style="font-size:28px;color:#FF6B9D;">'+data.word+'</div></div>';
 }
 
 let cwi=0,currentWord=WORDS[0],flipped=false;
 function renderFlash(){
   currentWord=WORDS[cwi];
-  document.getElementById('cEmoji').textContent=currentWord.emoji;
-  document.getElementById('cEn').textContent=currentWord.en;
-  document.getElementById('cZh').textContent='👆 点点看中文';
-  document.getElementById('cZh').style.opacity='0.5';
+  const e=document.getElementById('cEmoji');
+  const en=document.getElementById('cEn');
+  const zh=document.getElementById('cZh');
+  if(e)e.textContent=currentWord.emoji;
+  if(en)en.textContent=currentWord.en;
+  if(zh){zh.textContent='👆 点点看中文';zh.style.opacity='0.5';}
   setTimeout(()=>speak(currentWord.en),300);
+  updateHud();
 }
 function flipCard(){
+  if(!currentWord)return;
   flipped=!flipped;
-  document.getElementById('cZh').textContent=flipped?currentWord.zh:'👆 点点看中文';
-  document.getElementById('cZh').style.opacity=flipped?'1':'0.5';
-  if(flipped){learnedWords=Math.max(learnedWords,cwi+1);score+=2;save();
-    document.getElementById('hudWords').textContent=learnedWords;}
+  const zh=document.getElementById('cZh');
+  if(zh){
+    zh.textContent=flipped?currentWord.zh:'👆 点点看中文';
+    zh.style.opacity=flipped?'1':'0.5';
+  }
+  if(flipped){learnedWords=Math.max(learnedWords,cwi+1);score+=2;save();updateHud();}
 }
 function nextCard(){cwi=(cwi+1)%WORDS.length;renderFlash();}
 function prevCard(){cwi=(cwi-1+WORDS.length)%WORDS.length;renderFlash();}
@@ -842,20 +880,26 @@ function prevCard(){cwi=(cwi-1+WORDS.length)%WORDS.length;renderFlash();}
 let si=0,sf=[],cur=WORDS[0];
 function renderSpell(){
   cur=WORDS[si];
-  document.getElementById('gEmoji').textContent=cur.emoji;
-  document.getElementById('gWord').textContent=cur.en.split('').map(c=>'_').join(' ');
-  document.getElementById('slots').innerHTML=cur.en.split('').map(()=>'<div class="slot"></div>').join('');
+  const ge=document.getElementById('gEmoji');
+  const gw=document.getElementById('gWord');
+  const slots=document.getElementById('slots');
+  const opts=document.getElementById('lOpts');
+  if(ge)ge.textContent=cur.emoji;
+  if(gw)gw.textContent=cur.en.split('').map(c=>'_').join(' ');
+  if(slots)slots.innerHTML=cur.en.split('').map(()=>'<div class="slot"></div>').join('');
   let letters=cur.en.toUpperCase().split('');
   let dis='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').filter(l=>!letters.includes(l));
   let all=[...letters];
   for(let i=0;i<3;i++){const idx=Math.floor(Math.random()*dis.length);all.push(dis.splice(idx,1)[0]);}
   all.sort(()=>Math.random()-0.5);
-  document.getElementById('lOpts').innerHTML=all.map(l=>
-    '<div class="letter-option" data-letter="'+l+'" onclick="pickLetter(this,\''+l+'\')">'+l+'</div>').join('');
+  if(opts)opts.innerHTML=all.map(l=>
+    '<div class="letter-option" data-l="'+l+'" onclick="pickLetter(this)">'+l+'</div>').join('');
   sf=[];
   setTimeout(()=>speak(cur.en),500);
+  updateHud();
 }
-function pickLetter(el,letter){
+function pickLetter(el){
+  const letter=el.dataset.l;
   const tl=cur.en.toUpperCase().split('');
   const pos=sf.length;
   if(letter===tl[pos]){
@@ -863,11 +907,10 @@ function pickLetter(el,letter){
     setTimeout(()=>el.style.display='none',300);
     sf.push(letter);
     const slots=document.querySelectorAll('#slots .slot');
-    slots[pos].textContent=letter;slots[pos].classList.add('filled');
+    if(slots[pos]){slots[pos].textContent=letter;slots[pos].classList.add('filled');}
     speak(letter.toLowerCase());
     if(sf.length===tl.length){
       score+=20;correctCount++;streak++;save();
-      document.getElementById('hudCorrect').textContent=correctCount;
       setTimeout(()=>{showFeedback('🎉');setTimeout(()=>{si=(si+1)%WORDS.length;renderSpell();},1000);},500);
     }
   }else{
@@ -875,12 +918,13 @@ function pickLetter(el,letter){
     setTimeout(()=>el.classList.remove('wrong'),500);
     setTimeout(()=>speak(cur.en),300);
   }
+  updateHud();
 }
 function giveHint(){
   const tl=cur.en.toUpperCase().split('');
   const nl=tl[sf.length];if(!nl)return;
   document.querySelectorAll('#lOpts .letter-option').forEach(opt=>{
-    if(opt.dataset.letter===nl&&!opt.classList.contains('used')){
+    if(opt.dataset.l===nl&&!opt.classList.contains('used')){
       opt.classList.add('hint');setTimeout(()=>opt.classList.remove('hint'),2000);
     }
   });
@@ -889,17 +933,23 @@ function giveHint(){
 let di=0,cur=WORDS[0];
 function renderDict(){
   cur=WORDS[di];
-  document.getElementById('dEmoji').textContent=cur.emoji;
-  document.getElementById('dHint').textContent='看图拼写单词（共 '+cur.en.length+' 个字母）';
-  document.getElementById('dInput').value='';
+  const de=document.getElementById('dEmoji');
+  const dh=document.getElementById('dHint');
+  const di2=document.getElementById('dInput');
+  if(de)de.textContent=cur.emoji;
+  if(dh)dh.textContent='看图拼写单词（共 '+cur.en.length+' 个字母）';
+  if(di2)di2.value='';
   setTimeout(()=>speak(cur.en),500);
+  updateHud();
 }
 function checkDict(){
-  const input=document.getElementById('dInput').value.trim().toLowerCase();
+  const di2=document.getElementById('dInput');
+  if(!di2)return;
+  const input=di2.value.trim().toLowerCase();
   const word=cur.en.toLowerCase();
   if(input===word){showFeedback('✅');score+=15;correctCount++;streak++;save();setTimeout(()=>{di=(di+1)%WORDS.length;renderDict();},1000);}
   else if(input.length===0)alert('请先输入答案哦～');
-  else{showFeedback('❌');wrongCount++;streak=0;save();document.getElementById('dInput').value='';}
+  else{showFeedback('❌');wrongCount++;streak=0;save();di2.value='';}
+  updateHud();
 }
-document.getElementById('dInput').addEventListener('keypress',e=>{if(e.key==='Enter')checkDict();});
-updateHeader();</script></body></html>
+updateHud();</script></body></html>
